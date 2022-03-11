@@ -5,12 +5,12 @@
 #include <pthread.h>
 #include <signal.h>
 
-static bool g_condition = false;
+static volatile bool g_condition = false;
 
 void signal_handler(int signum)
 {
     printf("got signal %d\n", signum);
-    g_condition = signum % 2;
+    g_condition = true;
 }
 
 void *bus_watcher(void *ctx)
@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 {
     pthread_t thread;
 
-    signal(SIGBUS, signal_handler); // signal 7
     signal(SIGUSR1, signal_handler); // signal 10
 
     pthread_create(&thread, NULL, bus_watcher, NULL);
