@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 {
     pthread_t thread;
 
-    signal(SIGBUS, signal_handler);
-    signal(SIGUSR1, signal_handler);
+    signal(SIGBUS, signal_handler); // signal 7
+    signal(SIGUSR1, signal_handler); // signal 10
 
     pthread_create(&thread, NULL, bus_watcher, NULL);
     pthread_join(thread, NULL);
