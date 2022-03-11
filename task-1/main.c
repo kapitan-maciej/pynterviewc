@@ -14,14 +14,14 @@ enum element_size
 
 void prep_array(uint8_t **array, int array_len_bytes)
 {
-    *array = malloc(array_len_bytes);
+    *array = (uint8_t*)malloc(array_len_bytes);
 
     // Sequentially fill the array
     for (uint8_t i = 0; i < array_len_bytes; ++i)
     {
         // @todo1:
         // this assignment will not behave as commented above, please fix
-        (*array)[i] = i;
+        *array[i] = i;
     }
 }
 
@@ -58,23 +58,13 @@ int main(int argc, char *argv[])
     enum element_size element_size = element_size_word;
     uint8_t *array = NULL;
 
-    if (argc > 1)
-        array_len_bytes = atoi(argv[1]);
-    if (argc > 2)
-        element_size = atoi(argv[2]);
-
-    if (array_len_bytes > 128)
-        return RETURN_ERROR;
-
     prep_array(&array, array_len_bytes);
-    printf("Before flip\\/\n");
     ugly_print_array(array, array_len_bytes);
 
     if (reverse_bytes_by_element(array, array_len_bytes, element_size))
         return RETURN_ERROR;
 
     ugly_print_array(array, array_len_bytes);
-    printf("After flip /\\\n");
 
     return RETURN_SUCCESS;
 }
