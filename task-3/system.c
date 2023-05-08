@@ -40,7 +40,7 @@ void system_install_protocol(uint64_t identifier, void *protocol)
     struct protocol_entry *entry = (struct protocol_entry *)malloc(sizeof(struct protocol_entry));
     entry->identifier = identifier;
     entry->protocol = protocol;
-    
+
     LIST_INSERT_HEAD(&installed_protocols, entry, nodes);
 }
 
@@ -60,7 +60,7 @@ int system_tell_time(enum time_format time_format)
     struct get_time_protocol *protocol;
     if (system_open_protocol(GET_TIME_PROTOCOL_IDENTIFIER, (void **)&protocol))
         return -1;
-    
+
     switch (time_format)
     {
     case time_format_raw:
@@ -70,14 +70,14 @@ int system_tell_time(enum time_format time_format)
         time_string = protocol->get_formatted_time();
         printf("formatted time: %s\n", time_string);
         break;
-    
+
     default:
         return -1;
     }
 
     if (time_string)
         free(time_string);
-    
+
     return 0;
 }
 
@@ -87,7 +87,7 @@ int system_tell_date(bool us_format)
     struct get_time_protocol *protocol;
     if (system_open_protocol(GET_TIME_PROTOCOL_IDENTIFIER, (void **)&protocol))
         return -1;
-    
+
     time_string = protocol->get_date(us_format);
     printf("date format %s: %s\n", us_format ? "us" : "iso", time_string);
 
