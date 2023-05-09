@@ -68,6 +68,3 @@ int main(int argc, char *argv[])
 
     return RETURN_SUCCESS;
 }
-
-// @todo4:
-// there is an memory leak somewhere, please fix it
